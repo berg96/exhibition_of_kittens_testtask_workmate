@@ -1,0 +1,1 @@
+# exhibition_of_kittens_testtask_workmate
