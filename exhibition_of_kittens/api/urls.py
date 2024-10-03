@@ -1,9 +1,12 @@
 from django.urls import include, path
 from rest_framework import routers
 
+from .views import KittenViewSet, BreedViewSet
 
 router = routers.DefaultRouter()
-# router.register('ingredients', IngredientViewSet, basename='ingredients')
+router.register('kittens', KittenViewSet, basename='kittens')
+router.register('breeds', BreedViewSet, basename='breeds')
+
 
 urlpatterns = [
     path('auth/', include('djoser.urls')),
