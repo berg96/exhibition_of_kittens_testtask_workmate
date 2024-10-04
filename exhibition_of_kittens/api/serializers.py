@@ -1,3 +1,4 @@
+from django.db.models import Avg
 from djoser.serializers import UserSerializer
 from rest_framework import serializers
 
@@ -17,10 +18,14 @@ class KittenReadSerializer(serializers.ModelSerializer):
     owner = UserSerializer()
     image = Base64ImageField()
     breed = BreedSerializes()
+    rating = serializers.SerializerMethodField()
 
     class Meta:
         model = Kitten
         fields = '__all__'
+
+    def get_rating(self, kitten):
+        return kitten.scores.aggregate(avg_score=Avg('score'))['avg_score']
 
 
 class KittenWriteSerializer(serializers.ModelSerializer):
@@ -44,3 +49,7 @@ class KittenWriteSerializer(serializers.ModelSerializer):
 
     def to_representation(self, recipe):
         return KittenReadSerializer(recipe).data
+
+
+class ScoreSerializer(serializers.Serializer):
+    score = serializers.IntegerField(required=True, min_value=1, max_value=5)

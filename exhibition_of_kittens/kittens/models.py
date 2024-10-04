@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
-from django.core.validators import MinValueValidator, RegexValidator
+from django.core.validators import MinValueValidator, RegexValidator, \
+    MaxValueValidator
 from django.db import models
 
 User = get_user_model()
@@ -8,6 +9,8 @@ MAX_LENGTH = 200
 MAX_LENGTH_COLOR = 7
 MIN_VALUE_AGE = 1
 VALIDATE_COLOR_ERROR = 'Цвет должен быть в формате HEX-код'
+MIN_VALUE_SCORE = 1
+MAX_VALUE_SCORE = 5
 
 
 class Kitten(models.Model):
@@ -51,8 +54,8 @@ class Kitten(models.Model):
 
     def __str__(self):
         return (
-            f'{self.owner.username}`s {self.name} {self.breed.name} {self.age} '
-            f'{self.color} {self.description[:20]}'
+            f'{self.owner.username}`s {self.name} {self.breed.name} {self.age}'
+            f' {self.color} {self.description[:20]}'
         )
 
 
@@ -74,3 +77,27 @@ class Breed(models.Model):
 
     def __str__(self):
         return f'{self.name} ({self.slug}) {self.description[:20]}'
+
+
+class Score(models.Model):
+    kitten = models.ForeignKey(
+        Kitten, on_delete=models.CASCADE, verbose_name='Котенок'
+    )
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name='Пользователь'
+    )
+    score = models.IntegerField(
+        validators=[
+            MinValueValidator(MIN_VALUE_SCORE),
+            MaxValueValidator(MAX_VALUE_SCORE)
+        ],
+        verbose_name='Оценка'
+    )
+
+    class Meta:
+        verbose_name = 'Оценка'
+        verbose_name_plural = 'Оценки'
+        default_related_name = 'scores'
+
+    def __str__(self):
+        return f'{self.score} {self.kitten.name} от {self.user.username}'

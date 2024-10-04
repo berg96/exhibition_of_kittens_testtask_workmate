@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import Kitten, Breed
+from .models import Kitten, Breed, Score
 
 
 @admin.register(Kitten)
@@ -33,3 +33,8 @@ class KittenAdmin(admin.ModelAdmin):
 @admin.register(Breed)
 class BreedAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
+
+
+@admin.register(Score)
+class ScoreAdmin(admin.ModelAdmin):
+    pass
