@@ -13,7 +13,17 @@ MIN_VALUE_SCORE = 1
 MAX_VALUE_SCORE = 5
 
 
-class Kitten(models.Model):
+class BasePubTimeModel(models.Model):
+    pub_time = models.DateTimeField(
+        auto_now_add=True, verbose_name='Время публикации'
+    )
+
+    class Meta:
+        abstract = True
+        ordering = ('-pub_time',)
+
+
+class Kitten(BasePubTimeModel):
     name = models.CharField(max_length=MAX_LENGTH, verbose_name='Имя')
     color = models.CharField(
         max_length=MAX_LENGTH_COLOR,
@@ -41,7 +51,7 @@ class Kitten(models.Model):
         'Breed', on_delete=models.CASCADE, verbose_name='Порода'
     )
 
-    class Meta:
+    class Meta(BasePubTimeModel.Meta):
         verbose_name = 'Котенок'
         verbose_name_plural = 'Котята'
         default_related_name = 'kittens'
@@ -79,7 +89,7 @@ class Breed(models.Model):
         return f'{self.name} ({self.slug}) {self.description[:20]}'
 
 
-class Score(models.Model):
+class Score(BasePubTimeModel):
     kitten = models.ForeignKey(
         Kitten, on_delete=models.CASCADE, verbose_name='Котенок'
     )
@@ -94,7 +104,7 @@ class Score(models.Model):
         verbose_name='Оценка'
     )
 
-    class Meta:
+    class Meta(BasePubTimeModel.Meta):
         verbose_name = 'Оценка'
         verbose_name_plural = 'Оценки'
         default_related_name = 'scores'
