@@ -18,7 +18,6 @@ SUPERUSER_SUCCESS = 'Суперпользователь {} успешно соз
 SUCCESS = 'Импортировано {} {} из {}'
 
 
-
 class Command(BaseCommand):
     def handle(self, *args, **options):
         user = User.objects.create_user(

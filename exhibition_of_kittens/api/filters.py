@@ -1,5 +1,5 @@
 import django_filters
-from django.db.models import Case, When, Q, Value, IntegerField
+from django.db.models import Case, IntegerField, Q, Value, When
 
 from kittens.models import Breed, Kitten
 
@@ -17,8 +17,8 @@ class KittenFilter(django_filters.FilterSet):
 
     def filter_breed_name(self, kittens, name, value):
         return kittens.filter(
-            Q(breed__name__icontains=value.lower()) |
-            Q(breed__name__istartswith=value.capitalize())
+            Q(breed__name__icontains=value.lower())
+            | Q(breed__name__istartswith=value.capitalize())
         ).annotate(
             sort_by=Case(
                 When(
