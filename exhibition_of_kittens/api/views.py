@@ -1,3 +1,4 @@
+from django.db.models import Avg
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.decorators import action
@@ -35,6 +36,11 @@ class KittenViewSet(ModelViewSet):
         if self.action in ('list', 'retrieve'):
             return KittenReadSerializer
         return KittenWriteSerializer
+
+    def get_queryset(self):
+        return Kitten.objects.annotate(
+            rating=Avg('scores__score')
+        ).order_by('-rating')
 
     @action(
         detail=True, methods=['post', 'delete'], url_path='score',
