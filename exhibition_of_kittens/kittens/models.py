@@ -38,6 +38,9 @@ class Kitten(BasePubTimeModel):
         verbose_name='Возраст (полных месяцев)'
     )
     description = models.TextField(verbose_name='Описание')
+    breed = models.ForeignKey(
+        'Breed', on_delete=models.CASCADE, verbose_name='Порода'
+    )
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name='Хозяин'
     )
@@ -47,9 +50,6 @@ class Kitten(BasePubTimeModel):
         blank=True,
         default=None,
         verbose_name='Фото'
-    )
-    breed = models.ForeignKey(
-        'Breed', on_delete=models.CASCADE, verbose_name='Порода'
     )
 
     class Meta(BasePubTimeModel.Meta):
@@ -74,11 +74,11 @@ class Breed(models.Model):
     name = models.CharField(
         max_length=MAX_LENGTH, unique=True, verbose_name='Название'
     )
-    description = models.TextField(
-        null=True, blank=True, verbose_name='Описание'
-    )
     slug = models.SlugField(
         max_length=MAX_LENGTH, unique=True, verbose_name='Слаг'
+    )
+    description = models.TextField(
+        null=True, blank=True, verbose_name='Описание'
     )
 
     class Meta:
@@ -87,7 +87,7 @@ class Breed(models.Model):
         ordering = ('name',)
 
     def __str__(self):
-        return f'{self.name} ({self.slug}) {self.description[:20]}'
+        return f'{self.name} ({self.slug})'
 
 
 class Score(BasePubTimeModel):
