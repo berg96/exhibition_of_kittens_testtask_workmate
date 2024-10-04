@@ -30,13 +30,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='score',
             name='pub_time',
-            field=models.DateTimeField(auto_now_add=True, default=0, verbose_name='Время публикации'),
-            preserve_default=False,
-        ),
-        migrations.AlterField(
-            model_name='score',
-            name='score',
-            field=models.IntegerField(default=0, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(5)], verbose_name='Оценка'),
+            field=models.DateTimeField(auto_now_add=True, default=datetime.datetime(2024, 10, 4, 13, 8, 43, 914637, tzinfo=datetime.timezone.utc), verbose_name='Время публикации'),
             preserve_default=False,
         ),
     ]

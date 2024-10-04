@@ -102,6 +102,7 @@ class Score(BasePubTimeModel):
             MinValueValidator(MIN_VALUE_SCORE),
             MaxValueValidator(MAX_VALUE_SCORE)
         ],
+        blank=True, null=True,
         verbose_name='Оценка'
     )
 
