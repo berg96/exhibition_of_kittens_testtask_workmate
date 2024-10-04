@@ -54,12 +54,13 @@ class KittenViewSet(ModelViewSet):
             return Response(status=status.HTTP_204_NO_CONTENT)
         serializer = ScoreSerializer(data=request.data)
         if serializer.is_valid():
-            score, created = Score.objects.get_or_create(
-                user=user, kitten=kitten
-            )
-            if not created:
+            if Score.objects.filter(user=user, kitten=kitten).exists():
                 raise ValidationError({'errors': SCORE_ALREADY})
-            score.score = serializer.validated_data['score']
+            score = Score.objects.create(
+                user=user,
+                kitten=kitten,
+                score=serializer.validated_data['score']
+            )
             score.save()
             return Response(
                 KittenReadSerializer(kitten).data,

@@ -32,7 +32,7 @@ def kitten(db, breed, user):
 
 @pytest.fixture
 def score(db, kitten, user):
-    return Score.objects.create(user=user, kitten=kitten)
+    return Score.objects.create(user=user, kitten=kitten, score=5)
 
 
 @pytest.fixture
