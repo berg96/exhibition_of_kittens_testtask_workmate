@@ -1,8 +1,7 @@
 from django.db.models import Avg
 from djoser.serializers import UserSerializer
-from rest_framework import serializers
-
 from drf_extra_fields.fields import Base64ImageField
+from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
 from kittens.models import Breed, Kitten

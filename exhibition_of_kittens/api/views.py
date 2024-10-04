@@ -3,10 +3,13 @@ from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, \
-    IsAuthenticated
+from rest_framework.permissions import (
+    IsAuthenticated, IsAuthenticatedOrReadOnly
+)
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+
+from kittens.models import Breed, Kitten, Score
 
 from .filters import KittenFilter
 from .permissions import OwnerOrReadOnly
@@ -14,8 +17,6 @@ from .serializers import (
     BreedSerializes, KittenReadSerializer, KittenWriteSerializer,
     ScoreSerializer
 )
-from kittens.models import Breed, Kitten, Score
-
 
 SCORE_ALREADY = 'Оценка уже поставлена.'
 SCORE_REQUIRED = 'Поле score является обязательным.'

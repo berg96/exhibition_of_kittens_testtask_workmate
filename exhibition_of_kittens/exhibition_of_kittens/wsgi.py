@@ -11,6 +11,8 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'exhibition_of_kittens.settings')
+os.environ.setdefault(
+    'DJANGO_SETTINGS_MODULE', 'exhibition_of_kittens.settings'
+)
 
 application = get_wsgi_application()
