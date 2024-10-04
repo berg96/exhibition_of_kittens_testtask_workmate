@@ -37,6 +37,10 @@ cd exhibition_of_kittens_testtask_workmate
 ```
 docker compose up -d
 ```
+Создать суперпользователя и минимальные базовые данные (3 породы, 3 котенка, 3 оценки) при запущенном контейнере:
+```
+docker compose exec -it backend python manage.py create_base_data
+```
 
 
 Документация API при запущенном сервере:
